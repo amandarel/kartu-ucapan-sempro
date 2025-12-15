@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Sempro!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Menggunakan Library Confetti Eksternal (Ringan) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <!-- Audio Tepuk Tangan & Musik -->
+    <audio id="celebrationAudio">
+        <!-- Sound effect sorakan/tepuk tangan pendek -->
+        <source src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- LAYAR AWAL -->
+    <div class="start-screen" id="startScreen">
+        <div class="icon-bounce">📝</div>
+        <h2>Seseorang baru saja selesai Sempro?</h2>
+        <button class="btn-celebrate" onclick="startCelebration()">Rayakan Sekarang! 🎉</button>
+    </div>
+
+    <!-- KARTU UTAMA -->
+    <div class="card-container" id="card">
+        <div class="header-img">
+            🎓
+        </div>
+        
+        <div class="content">
+            <p class="tagline">CONGRATULATIONS!</p>
+            <h1>Happy Sempro, <br><span id="recipient-name">Teman</span>!</h1>
+            
+            <p class="message">
+                ANJAIII KAK CIKA SO SEMPROOO 🐣<br>
+                Satu beban berat sudah hilang. Beban lain akan datang, hahahaha <br>
+                main roblox dulu, istirahat tidak lama
+                habis itu gas revisi, semangat kak cika, sehat-sehat.
+            </p>
+
+            <!-- Progress Bar Skripsi -->
+            <div class="roadmap-box">
+                <p>Status Skripsian:</p>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="milestones">
+                    <span class="done">✅ Judul</span>
+                    <span class="done">✅ Sempro</span>
+                    <span class="waiting">⏳ Sidang</span>
+                    <span class="waiting">🎓 Wisuda</span>
+                </div>
+            </div>
+
+            <div class="footer">
+                Jangan lupa traktiran gacoannya!<br>
+                <strong>- Aurelia si paling jago bahasa inggris😎 -</strong>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
