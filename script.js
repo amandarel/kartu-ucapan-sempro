@@ -1,11 +1,23 @@
 window.onload = function() {
-    // 1. Ambil nama dari URL (?to=Nama)
     const urlParams = new URLSearchParams(window.location.search);
-    const recipient = urlParams.get('to');
-    
+    const recipient = urlParams.get('to'); 
+
+    const databasePesan = {
+        "Kak Cika": "ANJAIII KAK CIKA SO SEMPROOO 🐣<br> Satu beban berat sudah hilang Beban lain akan datang😎<br> main roblox dulu, istirahat tidak lama habis itu gas revisi, semangat kak cika, sehat-sehat.",
+        
+        "Kak Yokbet": "Selamat sempro ibunda Yokbet istri potifar😏<br> sangat bangga dengan pencapaian ibunda yang sangat tidak mudah dan kedepannya pasti masih tidak mudah, ah mar dengan roasting orang bisa apalagi ini<br> you always got my back kecuali saki belakang "
+    };
+
     if (recipient) {
         document.getElementById('recipient-name').innerText = recipient;
         document.title = "Happy Sempro " + recipient + "!";
+        const namaKecil = recipient.toLowerCase();
+
+        if (databasePesan[namaKecil]) {
+            document.getElementById('custom-message').innerHTML = databasePesan[namaKecil];
+        } else {
+            document.getElementById('custom-message').innerHTML = databasePesan["default"];
+        }
     }
 };
 
@@ -15,31 +27,25 @@ function startCelebration() {
     const audio = document.getElementById('celebrationAudio');
     const progressFill = document.querySelector('.progress-fill');
 
-    // 1. Hilangkan layar awal
     startScreen.style.opacity = '0';
     setTimeout(() => {
         startScreen.style.display = 'none';
         
-        // 2. Munculkan Kartu
         card.classList.add('active');
 
-        // 3. Play Audio
         audio.volume = 0.6;
         audio.play();
 
-        // 4. Jalankan Progress Bar (Efek loading ke 50%)
-        // Kita set 50% karena Sempro kira-kira setengah jalan skripsi
+    
         setTimeout(() => {
             progressFill.style.width = "50%";
         }, 300);
 
-        // 5. LEDAKAN CONFETTI 🎉
         runConfetti();
 
     }, 300);
 }
 
-// Fungsi Confetti (Menggunakan library canvas-confetti)
 function runConfetti() {
     var duration = 3 * 1000; // 3 detik
     var animationEnd = Date.now() + duration;
@@ -58,7 +64,6 @@ function runConfetti() {
 
       var particleCount = 50 * (timeLeft / duration);
       
-      // Confetti dari kiri dan kanan
       confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
       confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
     }, 250);
