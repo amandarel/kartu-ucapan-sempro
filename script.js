@@ -3,7 +3,7 @@ window.onload = function() {
     const recipient = urlParams.get('to'); 
 
     const databasePesan = {
-        "kak cika": "ANJAIII KAK CIKA SO SEMPROOO 🐣<br> Satu beban berat sudah hilang Beban lain akan datang😎<br> main roblox dulu, istirahat tidak lama habis itu gas revisi, semangat kak cika, sehat-sehat.",
+        "Kak%20Cika": "ANJAIII KAK CIKA SO SEMPROOO 🐣<br> Satu beban berat sudah hilang Beban lain akan datang😎<br> main roblox dulu, istirahat tidak lama habis itu gas revisi, semangat kak cika, sehat-sehat.",
         
         "Kak Yokbet": "Selamat sempro ibunda Yokbet istri potifar😏<br> sangat bangga dengan pencapaian ibunda yang sangat tidak mudah dan kedepannya pasti masih tidak mudah, ah mar dengan roasting orang bisa apalagi ini<br> you always got my back kecuali saki belakang "
     };
@@ -68,4 +68,5 @@ function runConfetti() {
       confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
     }, 250);
 }
+
 
