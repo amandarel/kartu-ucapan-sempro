@@ -4,108 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Sempro!</title>
-    <!-- Font Inter & Fredoka -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS CDN -->
+    <!-- Font & Desktop Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #0F0C29; margin: 0; min-height: 100vh; overflow-x: hidden; }
+        .gradient-bg { background: linear-gradient(135deg, #24243e, #302b63, #0f0c29); }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .rainbow-text { background: linear-gradient(to right, #fb923c, #f472b6, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Custom Scrollbar for Message Box */
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-20px) rotate(5deg); } }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .slant { transform: skewX(-20deg); }
+    </style>
 </head>
-<body class="bg-[#0F0C29] min-h-screen flex items-center justify-center p-4 overflow-hidden">
+<body class="gradient-bg flex items-center justify-center p-4">
 
-    <!-- Efek Background -->
-    <div class="fixed inset-0 pointer-events-none opacity-20">
-        <div class="absolute top-20 left-20 w-32 h-32 rounded-full bg-orange-400 blur-[80px]"></div>
-        <div class="absolute bottom-20 right-20 w-64 h-64 rounded-full bg-purple-500 blur-[120px]"></div>
-    </div>
+    <!-- Efek Dekorasi Background -->
+    <div class="fixed top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+    <div class="fixed bottom-20 right-10 w-48 h-48 bg-purple-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
 
-    <!-- Audio Musik -->
     <audio id="celebrationAudio">
         <source src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Tombol Mute -->
-    <button id="toggleAudio" class="hidden fixed top-6 right-6 z-50 bg-orange-500 text-white p-4 rounded-2xl shadow-2xl hover:scale-110 transition-transform">
-        🔊
-    </button>
-
-    <!-- Tampilan Awal (Start Screen) -->
-    <div class="text-center z-10" id="startScreen">
-        <div class="text-9xl mb-8 animate-bounce">😼</div>
-        <h2 class="text-white text-5xl md:text-7xl font-black uppercase tracking-tighter italic mb-10 leading-none">
-            New Achievement<br>
-            <span class="text-orange-400 underline decoration-orange-500/50">Unlocked.</span>
-        </h2>
-        <button class="bg-gradient-to-br from-orange-500 to-pink-500 text-white px-12 py-6 rounded-2xl text-2xl font-black uppercase tracking-widest shadow-[0_20px_50px_rgba(249,115,22,0.4)] transition-all hover:scale-105" onclick="startCelebration()">
-            Celebrate Now! 🎉
+    <!-- UI Start Screen -->
+    <div id="startScreen" class="text-center z-20">
+        <div class="text-8xl mb-8 animate-bounce">😼</div>
+        <h2 class="text-white text-4xl md:text-6xl font-black italic tracking-tighter uppercase mb-10">Achievement<br><span class="text-orange-400">Unlocked.</span></h2>
+        <button onclick="startCelebration()" class="group relative px-10 py-5 bg-gradient-to-r from-orange-500 to-pink-500 rounded-2xl text-white font-black text-xl uppercase tracking-widest overflow-hidden shadow-[0_20px_50px_rgba(249,115,22,0.4)]">
+            <span class="relative z-10">Rayakan 🎉</span>
+            <div class="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-500 slant"></div>
         </button>
     </div>
 
-    <!-- Kartu Ucapan (Hidden at Start) -->
-    <div class="hidden max-w-2xl w-full z-10" id="card">
-        <div class="bg-white/10 backdrop-blur-xl border border-white/10 rounded-[3rem] p-1 md:p-2 shadow-2xl">
+    <!-- UI Celebration Card (Awalnya Tersembunyi) -->
+    <div id="card" class="hidden w-full max-w-2xl z-20">
+        <div class="glass rounded-[3rem] p-2">
             <div class="bg-white/5 rounded-[2.5rem] p-8 md:p-12 relative flex flex-col items-center">
                 
-                <!-- Floating Icon -->
-                <div class="bg-gradient-to-br from-orange-400 to-pink-500 w-32 h-32 rounded-[2rem] flex items-center justify-center shadow-2xl absolute -top-16 rotate-12">
-                    <span class="text-6xl">🎓</span>
+                <!-- Ikon Topi Wisuda -->
+                <div class="absolute -top-12 bg-gradient-to-br from-orange-400 to-pink-500 w-24 h-24 rounded-3xl flex items-center justify-center shadow-2xl rotate-12">
+                    <span class="text-5xl">🎓</span>
                 </div>
 
-                <div class="mt-16 text-center w-full">
-                    <p class="text-orange-400 font-black tracking-[0.4em] text-xs mb-4 uppercase">CONGRATULATIONS ORANG BAIK</p>
-                    
-                    <h1 class="text-white text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter mb-8 uppercase italic">
-                        HAPPY <span class="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-pink-400 to-purple-500">SEMPRO,</span><br>
-                        <span class="text-3xl md:text-5xl opacity-80 not-italic font-extrabold" id="recipient-name">Manusia Baik! 🐣</span>
+                <div class="mt-12 text-center w-full">
+                    <p class="text-orange-400 font-black tracking-[0.4em] text-xs mb-4 uppercase">CONGRATULATIONS ON SEMPRO</p>
+                    <h1 class="text-white text-5xl md:text-7xl font-black leading-none italic tracking-tighter mb-6 uppercase">
+                        HAPPY <span class="rainbow-text block md:inline">SEMPRO,</span><br>
+                        <span class="text-3xl md:text-5xl opacity-80 not-italic font-extrabold" id="recipient-name">Manusia Baik!</span>
                     </h1>
 
-                    <p class="text-slate-300 leading-relaxed mb-12 text-lg md:text-xl italic max-w-lg mx-auto border-l-2 border-white/20 pl-6 text-left" id="custom-message">
-                        "ANJAIII! Satu beban berat sudah hilang. Beban lain akan datang — tapi jangan khawatir, istirahat sejenak habis itu gas revisi!"
-                    </p>
+                    <!-- Box Pesan (Bisa di-Scroll) -->
+                    <div class="text-slate-300 text-lg md:text-xl italic border-l-4 border-orange-500/50 pl-6 mb-10 max-h-[150px] overflow-y-auto custom-scroll text-left" id="custom-message">
+                        "Selamat! Satu beban berat sudah hilang. Beban lain akan datang — tapi jangan khawatir, istirahat sejenak habis itu gas revisi! Semangat terus, sehat-sehat selalu."
+                    </div>
 
-                    <!-- Roadmap Progress -->
-                    <div class="bg-black/40 p-8 rounded-[2.5rem] mb-12 text-left border border-white/5">
-                        <div class="flex justify-between items-center mb-6">
-                            <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Academic Progress</p>
-                            <span class="text-[10px] text-orange-400 font-black px-3 py-1 bg-orange-500/10 rounded-full border border-orange-500/20">Lvl 2: ON PROGRESS</span>
+                    <!-- Roadmap Visualisasi -->
+                    <div class="bg-black/30 p-8 rounded-[2rem] border border-white/5 mb-10 text-left">
+                        <div class="flex justify-between items-center mb-5">
+                            <span class="text-[10px] text-slate-500 font-black uppercase tracking-widest">Progress Akademik</span>
+                            <span class="text-[10px] text-orange-400 font-black uppercase bg-orange-500/10 px-3 py-1 rounded-full">Level 2: On Progress</span>
                         </div>
-                        <div class="h-4 bg-slate-900 rounded-full overflow-hidden mb-8 border border-white/5">
-                            <div class="h-full bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 transition-all duration-[2.5s] ease-out" id="progressBar" style="width: 0%"></div>
+                        <div class="h-3 w-full bg-slate-900 rounded-full overflow-hidden mb-6 border border-white/5">
+                            <div id="progressBar" class="h-full w-0 bg-gradient-to-r from-orange-500 to-pink-600 transition-all duration-[2000ms] ease-out"></div>
                         </div>
-                        <div class="flex justify-between text-white font-black text-[9px] uppercase tracking-tighter">
-                            <div class="flex flex-col items-center gap-2">
-                                <span class="bg-orange-500 p-2 rounded-full shadow-lg">✓</span>
-                                <span>Judul</span>
-                            </div>
-                            <div class="flex flex-col items-center gap-2">
-                                <span class="bg-orange-500 p-2 rounded-full shadow-lg">✓</span>
-                                <span>Sempro</span>
-                            </div>
-                            <div class="flex flex-col items-center gap-2 opacity-20">
-                                <span class="bg-slate-800 p-2 rounded-full">⏳</span>
-                                <span>Skripsi</span>
-                            </div>
-                            <div class="flex flex-col items-center gap-2 opacity-20">
-                                <span class="bg-slate-800 p-2 rounded-full">⏳</span>
-                                <span>Sidang</span>
-                            </div>
-                            <div class="flex flex-col items-center gap-2 opacity-20">
-                                <span class="bg-slate-800 p-2 rounded-full">🎓</span>
-                                <span>Wisuda</span>
-                            </div>
+                        <div class="flex justify-between text-[8px] font-black text-white uppercase opacity-40">
+                            <span>Judul ✅</span>
+                            <span>Sempro ✅</span>
+                            <span>Skripsi ⏳</span>
+                            <span>Sidang ⏳</span>
+                            <span>Wisuda 🎓</span>
                         </div>
                     </div>
 
                     <!-- Footer -->
-                    <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
                         <div class="text-center md:text-left">
-                            <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Reminder</p>
-                            <p class="text-slate-200 text-sm font-bold italic">Jangan lupa traktiran gacoannya! 🍜</p>
+                            <p class="text-slate-500 uppercase tracking-widest mb-1">Reminder</p>
+                            <p class="text-slate-200 font-bold italic">Jangan lupa traktiran gacoannya! 🍜</p>
                         </div>
                         <div class="text-center md:text-right">
-                            <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">With Love,</p>
-                            <p class="text-white text-sm font-black">Aurelia <span class="text-[10px] text-slate-500 font-normal">si paling jago Bahasa Inggris </span></p>
+                            <p class="text-slate-500 uppercase tracking-widest mb-1">With Love,</p>
+                            <p class="text-white font-black">Aurelia <span class="text-slate-400 font-normal italic">Si paling jago Inggris 😎</span></p>
                         </div>
                     </div>
                 </div>
@@ -113,6 +100,63 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        function startCelebration() {
+            document.getElementById('startScreen').classList.add('hidden');
+            const card = document.getElementById('card');
+            card.classList.remove('hidden');
+            
+            // Animasi Card Muncul
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px)';
+            setTimeout(() => {
+                card.style.transition = 'all 0.8s ease-out';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+                // Jalan progress bar
+                document.getElementById('progressBar').style.width = '40%';
+            }, 100);
+
+            // Suara
+            const audio = document.getElementById('celebrationAudio');
+            audio.volume = 0.5;
+            audio.play().catch(() => {});
+
+            // Confetti
+            runFirework();
+        }
+
+        function runFirework() {
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        // Ambil Nama dari URL jika ada (?to=Nama)
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const recipient = urlParams.get('to');
+            if (recipient) {
+                document.getElementById('recipient-name').innerText = recipient + "!";
+                
+                // Ganti pesan khusus kalau namanya ada di database
+                const db = {
+                    "cika": "ANJAIII KAK CIKA SO SEMPROOO 🐣<br>Satu beban berat sudah hilang. Beban lain akan datang😎<br>Main roblox dulu, istirahat tidak lama habis itu gas revisi, semangat kak cika, sehat-sehat.",
+                    "yokbet": "Selamat sempro ibunda Yokbet istri potifar😏<br>Sangat bangga dengan pencapaian ibunda yang sangat tidak mudah, mar dengan roasting orang bisa apalagi ini. You always got my back kecuali saki belakang. Love ibunda satu danau tondano sekeras ikan sapu-sapu."
+                };
+                const cleanName = recipient.toLowerCase().replace("kak ", "");
+                if (db[cleanName]) {
+                    document.getElementById('custom-message').innerHTML = db[cleanName];
+                }
+            }
+        }
+    </script>
 </body>
 </html>
