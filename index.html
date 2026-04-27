@@ -4,54 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Sempro!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <!-- Font Inter & Fredoka -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="bg-[#0F0C29] min-h-screen flex items-center justify-center p-4 overflow-hidden">
 
+    <!-- Efek Background -->
+    <div class="fixed inset-0 pointer-events-none opacity-20">
+        <div class="absolute top-20 left-20 w-32 h-32 rounded-full bg-orange-400 blur-[80px]"></div>
+        <div class="absolute bottom-20 right-20 w-64 h-64 rounded-full bg-purple-500 blur-[120px]"></div>
+    </div>
+
+    <!-- Audio Musik -->
     <audio id="celebrationAudio">
         <source src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="start-screen" id="startScreen">
-        <div class="icon-bounce">😼</div>
-        <h2>Pencapaian baru</h2>
-        <button class="btn-celebrate" onclick="startCelebration()">Rayakan Sekarang! 🎉</button>
+    <!-- Tombol Mute -->
+    <button id="toggleAudio" class="hidden fixed top-6 right-6 z-50 bg-orange-500 text-white p-4 rounded-2xl shadow-2xl hover:scale-110 transition-transform">
+        🔊
+    </button>
+
+    <!-- Tampilan Awal (Start Screen) -->
+    <div class="text-center z-10" id="startScreen">
+        <div class="text-9xl mb-8 animate-bounce">😼</div>
+        <h2 class="text-white text-5xl md:text-7xl font-black uppercase tracking-tighter italic mb-10 leading-none">
+            New Achievement<br>
+            <span class="text-orange-400 underline decoration-orange-500/50">Unlocked.</span>
+        </h2>
+        <button class="bg-gradient-to-br from-orange-500 to-pink-500 text-white px-12 py-6 rounded-2xl text-2xl font-black uppercase tracking-widest shadow-[0_20px_50px_rgba(249,115,22,0.4)] transition-all hover:scale-105" onclick="startCelebration()">
+            Celebrate Now! 🎉
+        </button>
     </div>
 
-    <div class="card-container" id="card">
-        <div class="header-img">
-            🎓
-        </div>
-        
-        <div class="content">
-            <p class="tagline">CONGRATULATIONS!</p>
-            <h1>Happy Sempro, <br><span id="recipient-name">Manusia baik</span></h1>
-            
-            <p class="message" id="custom-message">
-                Congratulations Manusia baik! 🐣<br>
-                Sangat bangga dan akan selalu bangga<br>
-                Sehat-sehat
-            </p>
-
-            <div class="roadmap-box">
-                <p>Status Studi:</p>
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
+    <!-- Kartu Ucapan (Hidden at Start) -->
+    <div class="hidden max-w-2xl w-full z-10" id="card">
+        <div class="bg-white/10 backdrop-blur-xl border border-white/10 rounded-[3rem] p-1 md:p-2 shadow-2xl">
+            <div class="bg-white/5 rounded-[2.5rem] p-8 md:p-12 relative flex flex-col items-center">
+                
+                <!-- Floating Icon -->
+                <div class="bg-gradient-to-br from-orange-400 to-pink-500 w-32 h-32 rounded-[2rem] flex items-center justify-center shadow-2xl absolute -top-16 rotate-12">
+                    <span class="text-6xl">🎓</span>
                 </div>
-                <div class="milestones">
-                    <span class="done">✅ Judul</span>
-                    <span class="done">✅ Sempro</span>
-                    <span class="waiting">⏳ Semhas/Skripsi</span>
-                    <span class="waiting">⏳ Kompre</span>
-                    <span class="waiting">🎓 Wisuda</span>
-                </div>
-            </div>
 
-            <div class="footer">
-                Jangan lupa traktiran gacoannya!<br>
-                <strong>- Aurelia si paling jago bahasa inggris😎 -</strong>
+                <div class="mt-16 text-center w-full">
+                    <p class="text-orange-400 font-black tracking-[0.4em] text-xs mb-4 uppercase">CONGRATULATIONS ON SEMPRO</p>
+                    
+                    <h1 class="text-white text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter mb-8 uppercase italic">
+                        HAPPY <span class="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-pink-400 to-purple-500">SEMPRO,</span><br>
+                        <span class="text-3xl md:text-5xl opacity-80 not-italic font-extrabold" id="recipient-name">Manusia Baik! 🐣</span>
+                    </h1>
+
+                    <p class="text-slate-300 leading-relaxed mb-12 text-lg md:text-xl italic max-w-lg mx-auto border-l-2 border-white/20 pl-6 text-left" id="custom-message">
+                        "ANJAIII! Satu beban berat sudah hilang. Beban lain akan datang — tapi jangan khawatir, istirahat sejenak habis itu gas revisi!"
+                    </p>
+
+                    <!-- Roadmap Progress -->
+                    <div class="bg-black/40 p-8 rounded-[2.5rem] mb-12 text-left border border-white/5">
+                        <div class="flex justify-between items-center mb-6">
+                            <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Academic Progress</p>
+                            <span class="text-[10px] text-orange-400 font-black px-3 py-1 bg-orange-500/10 rounded-full border border-orange-500/20">Lvl 2: ON PROGRESS</span>
+                        </div>
+                        <div class="h-4 bg-slate-900 rounded-full overflow-hidden mb-8 border border-white/5">
+                            <div class="h-full bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 transition-all duration-[2.5s] ease-out" id="progressBar" style="width: 0%"></div>
+                        </div>
+                        <div class="flex justify-between text-white font-black text-[9px] uppercase tracking-tighter">
+                            <div class="flex flex-col items-center gap-2">
+                                <span class="bg-orange-500 p-2 rounded-full shadow-lg">✓</span>
+                                <span>Judul</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2">
+                                <span class="bg-orange-500 p-2 rounded-full shadow-lg">✓</span>
+                                <span>Sempro</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 opacity-20">
+                                <span class="bg-slate-800 p-2 rounded-full">⏳</span>
+                                <span>Skripsi</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 opacity-20">
+                                <span class="bg-slate-800 p-2 rounded-full">⏳</span>
+                                <span>Sidang</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 opacity-20">
+                                <span class="bg-slate-800 p-2 rounded-full">🎓</span>
+                                <span>Wisuda</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div class="text-center md:text-left">
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Reminder</p>
+                            <p class="text-slate-200 text-sm font-bold italic">Jangan lupa traktiran gacoannya! 🍜</p>
+                        </div>
+                        <div class="text-center md:text-right">
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">With Love,</p>
+                            <p class="text-white text-sm font-black">Aurelia <span class="text-[10px] text-slate-500 font-normal">si paling jago Bahasa Inggris </span></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -59,4 +116,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
