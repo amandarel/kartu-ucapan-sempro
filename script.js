@@ -4,7 +4,7 @@ window.onload = function() {
 
     const databasePesan = {
         "kak cika": "ANJAIII KAK CIKA SO SEMPROOO 🐣<br>Satu beban berat sudah hilang, Beban lain akan datang😎<br>Main roblox dulu, istirahat tidak lama habis itu gas revisi, semangat kak cika, sehat-sehat.",
-        "kak yokbet": "Selamat sempro ibunda Yokbet istri potifar😏<br>Sangat bangga dengan pencapaian ibunda yang sangat tidak mudah dan kedepannya pasti masih tidak mudah... you always got my back kecuali saki belakang.",
+        "kak yokbet": "Selamat sempro ibunda Yokbet istri potifar😏<br>Sangat bangga dengan pencapaian ibunda yang sangat tidak mudah dan kedepannya pasti masih tidak mudah... you always got my back kecuali saki belakang. Love ibunda satu danau.",
         "default": "Congratulations! 🐣<br>Anjaii sudah sempro! Satu beban berat sudah hilang. Istirahat sejenak habis itu gas revisi! Semangat terus, sehat-sehat selalu."
     };
 
